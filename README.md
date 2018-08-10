@@ -14,10 +14,10 @@ h1 vkbot-core
 #### Ubuntu (VDS/VPS):
 1. Установить Node.js по этому гайду: https://www.8host.com/blog/ustanovka-node-js-pri-pomoshhi-nvm/
 2. Ввести:
-  *. sudo apt-get update
-  *. sudo apt-get install git
-  *. cd /root
-  *. git clone https://github.com/fakemancat/vkbot-core.git
+  ###### sudo apt-get update
+  ###### sudo apt-get install git
+  ###### cd /root
+  ###### git clone https://github.com/fakemancat/vkbot-core.git
 4. Подключиться по sftp у своему VDS/VPS
 3. Открыть папку /root/vkbot-core
 4. Открыть файл config.js
