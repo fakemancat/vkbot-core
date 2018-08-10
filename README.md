@@ -13,7 +13,7 @@ h1 vkbot-core
 
 #### Ubuntu (VDS/VPS):
 1. Установить Node.js по этому гайду: https://www.8host.com/blog/ustanovka-node-js-pri-pomoshhi-nvm/
-2. Ввести:
+2. Ввести:</br>
   sudo apt-get update</br>
   sudo apt-get install git</br>
   cd /root</br>
@@ -23,7 +23,7 @@ h1 vkbot-core
 4. Открыть файл config.js
 5. Настроить конфигурации для бота. Всё нужное закомментированно в самом файле config.js
 6. Выйти, сохранить config.js
-7. В консоли вводим:
+7. В консоли вводим:</br>
   cd /root/vkbot-core</br>
   node start
 
