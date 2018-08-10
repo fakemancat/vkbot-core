@@ -15,9 +15,9 @@ h1 vkbot-core
 1. Установить Node.js по этому гайду: https://www.8host.com/blog/ustanovka-node-js-pri-pomoshhi-nvm/
 2. Ввести:
 
-  sudo apt-get update
-  sudo apt-get install git
-  cd /root
+  sudo apt-get update</br>
+  sudo apt-get install git</br>
+  cd /root</br>
   git clone https://github.com/fakemancat/vkbot-core.git
 
 4. Подключиться по sftp у своему VDS/VPS
