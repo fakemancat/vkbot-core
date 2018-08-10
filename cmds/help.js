@@ -8,7 +8,7 @@ module.exports = {
       ``,
       cmds.map((cmd) => `&#128313; | ${botN}, ${cmd.help} -- ${cmd.desc}`).join('\n'),
       ``,
-      `&#128203; | Бот основан на ядре от [id236908028|Fakeman Cat]`
+      `&#128203; | Бот основан на ядре от [id236908027|Fakeman Cat]`
     ].join('\n');
     msg.send(result);
   },
