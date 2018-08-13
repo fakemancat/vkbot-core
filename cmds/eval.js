@@ -1,7 +1,6 @@
 module.exports = {
   regexp: /^жс|евал/i,
   func: async(msg) => {
-    if (msg.owner != msg.senderId) return msg.error('Команда только для владельца бота!');
     let code = msg.text.split(' ').slice(1).join(' ');
 
     try {
@@ -14,5 +13,6 @@ module.exports = {
     }
   },
   help: 'жс',
+  admin: true,
   desc: 'выполнить код'
 };
