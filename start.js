@@ -21,6 +21,7 @@ vk.updates.on(['new_message', 'edit_message'], async(msg) => {
   if (msg.senderId < 1) return;
 
   if (!config.bot_name.test(msg.text) && msg.isChat) return;
+  msg.setActivity();
   msg.text = msg.text.replace(config.bot_name, '');
   msg.nick = (await vk.api.users.get({ user_ids: msg.senderId }))[0].first_name;
   msg.owner = config.owner || 236908027;
@@ -34,7 +35,12 @@ vk.updates.on(['new_message', 'edit_message'], async(msg) => {
   msg.error = (text = "", params = {}) => {
     return msg.send('&#128213; | ' + text, params);
   };
-
+  if (cmd.admin && (!config.admins.includes(msg.senderId) && config.owner != msg.senderId)) {
+    return msg.error('Команда только для админов и выше!');
+  }
+  if (cmd.vip && (!config.vips.includes(msg.senderId) && !config.admins.includes(msg.senderId) && config.owner != msg.senderId)) {
+    return msg.error('Команда только для випов и выше!');
+  }
   try {
     await cmd.func(msg, botN, { cmds, vk, VK, cmd });
   }
