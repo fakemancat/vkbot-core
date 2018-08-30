@@ -3,8 +3,8 @@
 #### Готовое ядро для модульного бота вк основанный на Node.js под управлением модуля VK-IO
 #
 
-Установка:
+Установка: https://github.com/fakemancat/vkbot-core/blob/master/docs/install.md
 #
-Создание команд:
+Создание команд: https://github.com/fakemancat/vkbot-core/blob/master/docs/createCmds.md
 #
-Вызов методов
+Вызов методов: https://github.com/fakemancat/vkbot-core/blob/master/docs/callMethods.md
