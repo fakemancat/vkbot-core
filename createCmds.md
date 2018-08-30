@@ -8,20 +8,22 @@
 Для создания команды вам нужно создать файл (название).js в папке cmds.
 Открыть и использовать этот шаблон:
 
+```js
 module.exports = { </br>
-&nbsp;&nbsp;regexp: /^\s*(?:команда)\s*([^]*)/i, </br>
-&nbsp;&nbsp;func: async(msg, botN, { vk, cmds }) => { </br>
-&nbsp;&nbsp;&nbsp;Тут сама функция команды.. </br>
-&nbsp;&nbsp;}, </br>
-&nbsp;&nbsp;admin: true, </br>
-&nbsp;&nbsp;vip: true, </br>
-&nbsp;&nbsp;help: 'название', </br>
-&nbsp;&nbsp;desc: 'описание команды' </br>
+    regexp: /^\s*(?:команда)\s*([^]*)/i, </br>
+    func: async(msg, botN, { vk, cmds }) => { </br>
+      Тут сама функция команды.. </br>
+    }, </br>
+    admin: true, </br>
+    vip: true, </br>
+    help: 'название', </br>
+    desc: 'описание команды' </br>
 }
+```
 
 ### Давайте разбираться.
 
-#### module.exports = {...}
+```js module.exports = {...}```
 
 Это экспорт объекта нашей команды.</br>
 
