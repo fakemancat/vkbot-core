@@ -42,7 +42,7 @@ vk.updates.on(['new_message', 'edit_message'], async(msg) => {
     return msg.error('Команда только для випов и выше!');
   }
   try {
-    await cmd.func(msg, botN, { cmds, vk, VK, cmd });
+    await cmd.func(msg, { botN, cmds, vk, VK, cmd });
   }
   catch (e) {
     console.log(`Ошибка:\n${e}`.red.bold);
