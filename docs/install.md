@@ -17,7 +17,7 @@
   sudo apt-get install git</br>
   cd /root</br>
   git clone https://github.com/fakemancat/vkbot-core.git
-4. Подключиться по sftp у своему VDS/VPS
+4. Подключиться по sftp к своему VDS/VPS
 3. Открыть папку /root/vkbot-core
 4. Открыть файл config.js
 5. Настроить конфигурации для бота. Всё нужное закомментированно в самом файле config.js
