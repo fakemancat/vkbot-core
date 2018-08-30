@@ -1,6 +1,6 @@
 module.exports = {
   regexp: /^жс|евал/i,
-  func: async(msg) => {
+  func: async(msg, { vk, VK, cmds }) => {
     let code = msg.text.split(' ').slice(1).join(' ');
 
     try {
