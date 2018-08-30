@@ -53,7 +53,8 @@ func: async(msg, { botN, vk, cmds }) => { ... },
 ```js
 msg.nick // Имя отправителя
 botN // Имя бота
-vk // Объект модуля vk-io. С помощью него можно вызывать методы ВК (vk.api.(method)({ params })) (https://vk.com/dev/methods).
+vk // Объект модуля vk-io. С помощью его можно вызывать методы ВК
+   //(vk.api.(method)({ params })) (https://vk.com/dev/methods).
 cmds // Команды. Для получение кол-ва команд: cmds.length
 ```
 #
