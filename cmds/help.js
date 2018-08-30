@@ -1,6 +1,6 @@
 module.exports = {
   regexp: /^(помощь|команды|х[еэ]лп)$/i,
-  func: async(msg, botN, { cmds }) => {
+  func: async(msg, { botN, cmds }) => {
     let result = [
       `&#128215; | Команды бота ${botN}.`,
       ``,
