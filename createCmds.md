@@ -11,7 +11,7 @@
 ```js
 module.exports = {
     tag: ["команда"],
-    func: async(msg, botN, { vk, cmds }) => {
+    func: async(msg, { botN, vk, cmds }) => {
       Тут сама функция команды..
     }, </br>
     admin: true,
@@ -44,10 +44,17 @@ tag: [ "помощь", "команды", "хелп" ]
 ```
 #
 ```js
-func: async(msg, botN, { vk, cmds }) => { ... },
+func: async(msg, { botN, vk, cmds }) => { ... },
 ```
 
 Это сама функция вашей команды. Тут выполняется сам код.
+Полезные переменные для создания команд:
+```js
+msg.nick // Имя отправителя
+botN // Имя бота
+vk // Объект модуля vk-io. С помощью него можно вызывать методы ВК (vk.api.(method)({ params })) (https://vk.com/dev/methods).
+cmds // Команды. Для получение кол-ва команд: cmds.length
+```
 #
 ```js
 admin: true,
