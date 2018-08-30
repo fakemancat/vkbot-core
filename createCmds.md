@@ -10,14 +10,14 @@
 
 ```js
 module.exports = { </br>
-    regexp: /^\s*(?:команда)\s*([^]*)/i, </br>
-    func: async(msg, botN, { vk, cmds }) => { </br>
-      Тут сама функция команды.. </br>
+    regexp: /^\s*(?:команда)\s*([^]*)/i,
+    func: async(msg, botN, { vk, cmds }) => {
+      Тут сама функция команды..
     }, </br>
-    admin: true, </br>
-    vip: true, </br>
-    help: 'название', </br>
-    desc: 'описание команды' </br>
+    admin: true,
+    vip: true,
+    help: 'название',
+    desc: 'описание команды'
 }
 ```
 
