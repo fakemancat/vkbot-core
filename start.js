@@ -25,8 +25,8 @@ vk.updates.on(['new_message', 'edit_message'], async(msg) => {
   msg.text = msg.text.replace(config.bot_name, '');
   msg.nick = (await vk.api.users.get({ user_ids: msg.senderId }))[0].first_name;
   msg.owner = config.owner || 236908027;
-
-  let cmd = cmds.find(cmd => cmd.regexp.test(msg.text));
+  
+  let cmd = cmds.find(cmd => cmd.regexp ? cmd.regexp.test(msg.text) : new RegExp(`\\s*(${cmd.tag.join('|')})`, "i"));
   if (!cmd) return;
   console.log(`${msg.senderId} => ${msg.text}`.green.bold);
   msg.ok = (text = "", params = {}) => {
