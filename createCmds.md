@@ -13,7 +13,7 @@ module.exports = {
     tag: ["команда"],
     func: async(msg, { botN, vk, cmds }) => {
       Тут сама функция команды..
-    }, </br>
+    },
     admin: true,
     vip: true,
     help: 'название',
