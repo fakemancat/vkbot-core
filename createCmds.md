@@ -24,7 +24,7 @@ module.exports = {
 ### Давайте разбираться.
 
 ```js
-module.exports = {...}
+module.exports = { ... }
 ```
 
 Это экспорт объекта нашей команды.
