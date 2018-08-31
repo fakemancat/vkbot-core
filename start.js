@@ -13,7 +13,25 @@ const db = low(adapter);
 
 db.defaults({ users: [] }).write();
 //
-db.getUser = require('./functions/getUser.js');
+
+db.getUser = async(ID) => {
+  let user = db.get('users').find({ id: ID }).value();
+  if (!user) {
+    db.get('users').push({
+      id: ID,
+      userID: db.get('users').value().length + 1,
+      nick: (await vk.api.users.get({ user_ids: ID }))[0].first_name,
+      rights: 0,
+      ban: {
+        isBanned: false,
+        reason: ''
+      }
+    }).write();
+    user = db.get('users').find({ id: ID }).value();
+  }
+  return user;
+};
+
 const cmds = fs
   .readdirSync(`${__dirname}/cmds/`)
   .filter((name) => /\.js$/i.test(name))
@@ -50,7 +68,7 @@ vk.updates.on(['new_message', 'edit_message'], async(msg) => {
   msg.setActivity();
   await msg.loadMessagePayload();
   msg.text = msg.text.replace(config.bot_name, '');
-  msg.user = await getUser(msg.senderId);
+  msg.user = await db.getUser(msg.senderId);
   msg.fwds = msg.forwards || null;
 
   if (msg.user.ban.isBanned) {
@@ -77,11 +95,6 @@ vk.updates.on(['new_message', 'edit_message'], async(msg) => {
     msg.send(`Ошибка при выполнении команды '${msg.text}'`);
   }
 });
-
-module.exports = {
-  vk,
-  db
-};
 
 process.on("uncaughtException", e => {
   console.log(e);
