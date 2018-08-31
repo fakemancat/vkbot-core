@@ -1,4 +1,6 @@
-module.exports = async(ID, { db, vk }) => {
+const { vk, db } = require('../index.js');
+
+module.exports = async(ID) => {
     let user = db.get('users').find({ id: ID }).value();
     if (!user) {
         db.get('users').push({
