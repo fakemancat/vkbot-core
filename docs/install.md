@@ -8,7 +8,8 @@
 5. Ввести: npm i vk-io
 6. Ввести: npm i colors
 7. Ввести: npm i fs
-8. Для запуска бота ввести: node start
+8. Ввести: npm i lowdb
+9. Для запуска бота ввести: node start
 
 #### Ubuntu (VDS/VPS):
 1. Установить Node.js по этому гайду: https://www.8host.com/blog/ustanovka-node-js-pri-pomoshhi-nvm/
@@ -27,6 +28,7 @@
   npm i vk-io</br>
   npm i colors</br>
   npm i fs</br>
+  npm i lowdb</br>
   Для запуска бота ввести: node start</br>
 
 #### Для групп:
