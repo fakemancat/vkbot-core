@@ -64,6 +64,7 @@ vk.updates.on(['new_message', 'edit_message'], async(msg) => {
   if (msg.senderId < 1 || msg.isOutbox) return;
 
   if (!config.bot_name.test(msg.text) && msg.isChat) return;
+  console.log(msg.subTypes[0] + ` ${msg.senderId} => ${msg.text}`.green.bold);
   msg.setActivity();
   await msg.loadMessagePayload();
   msg.text = msg.text.replace(config.bot_name, '');
@@ -74,9 +75,9 @@ vk.updates.on(['new_message', 'edit_message'], async(msg) => {
     return msg.send(`&#128213; | Вы забанены по причине: "${msg.user.ban.reason}"`);
   }
 
-  let cmd = cmds.find(cmd => cmd.regexp ? cmd.regexp.test(msg.text) : (new RegExp(`\\s*(${cmd.tag.join('|')})`, "i")).test(msg.text));
+  let cmd = cmds.find(cmd => cmd.regexp ? cmd.regexp.test(msg.text) : (new RegExp(`^\\s*(${cmd.tag.join('|')})`, "i")).test(msg.text));
+
   if (!cmd) return msg.send('&#128213; | Команда не найдена');
-  console.log(`${msg.senderId} => ${msg.text}`.green.bold);
   msg.ok = (text = "", params = {}) => {
     return msg.send('&#128215; | ' + text, params);
   };
