@@ -50,7 +50,7 @@ vk.updates.on(['new_message', 'edit_message'], async(msg) => {
   msg.setActivity();
   await msg.loadMessagePayload();
   msg.text = msg.text.replace(config.bot_name, '');
-  msg.user = await getUser(msg.senderId, { db, msg, vk });
+  msg.user = await getUser(msg.senderId);
   msg.fwds = msg.forwards || null;
 
   if (msg.user.ban.isBanned) {
@@ -77,6 +77,11 @@ vk.updates.on(['new_message', 'edit_message'], async(msg) => {
     msg.send(`Ошибка при выполнении команды '${msg.text}'`);
   }
 });
+
+module.exports = {
+  vk,
+  db
+};
 
 process.on("uncaughtException", e => {
   console.log(e);
