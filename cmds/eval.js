@@ -1,18 +1,32 @@
 module.exports = {
-  regexp: /^жс|евал/i,
-  func: async(msg, { botN, vk, cmds }) => {
+  regexp: /^(а?жс+)/i,
+  func: async(msg, { botN, vk, cmds, db }) => {
     let code = msg.text.split(' ').slice(1).join(' ');
+    let name = msg.text.split(' ')[0];
+    msg.send(name);
 
     try {
-      let evaled = await eval(code);
-      let type = typeof evaled;
+      let evaled, type;
+      if (/^(жс)$/i.test(name)) {
+        evaled = await eval(code);
+        type = typeof evaled;
+      }
+      if (/^(жсс)$/i.test(name)) {
+        evaled = eval(code);
+        type = typeof evaled;
+        evaled = JSON.stringify(evaled, null, '&#12288;');
+      }
+      else if (/^(ажс)$/i.test(name)) {
+        evaled = eval(`(async() => {${code}})()`);
+        type = typeof evaled;
+      }
       msg.ok(`Выполнено\nТип: ${type}\nРезультат: ${evaled}`);
     }
     catch (e) {
       return msg.error(e);
     }
   },
-  help: 'жс',
-  admin: true,
+  rights: 3,
+  help: 'жс [код]',
   desc: 'выполнить код'
 };
