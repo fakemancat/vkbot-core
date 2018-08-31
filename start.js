@@ -4,7 +4,6 @@ const vk = new VK();
 const fs = require('fs');
 const colors = require('colors');
 const config = require("./config.js");
-const getUser = require('./functions/getUser.js');
 // database
 const low = require('lowdb');
 const FileSync = require('lowdb/adapters/FileSync');
