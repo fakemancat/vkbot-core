@@ -26,8 +26,8 @@ vk.updates.on(['new_message', 'edit_message'], async(msg) => {
   msg.nick = (await vk.api.users.get({ user_ids: msg.senderId }))[0].first_name;
   msg.owner = config.owner || 236908027;
   
-  let cmd = cmds.find(cmd => cmd.regexp ? cmd.regexp.test(msg.text) : new RegExp(`\\s*(${cmd.tag.join('|')})`, "i"));
-  if (!cmd) return;
+  let cmd = cmds.find(cmd => cmd.regexp ? cmd.regexp.test(msg.text) : (new RegExp(`\\s*(${cmd.tag.join('|')})`, "i")).test(msg.text));
+  if (!cmd) return msg.send('&#128213; | Команда не найдена');
   console.log(`${msg.senderId} => ${msg.text}`.green.bold);
   msg.ok = (text = "", params = {}) => {
     return msg.send('&#128215; | ' + text, params);
