@@ -1,31 +1,62 @@
+// Модули
 const { VK } = require('vk-io');
 const vk = new VK();
 const fs = require('fs');
 const colors = require('colors');
 const config = require("./config.js");
+const getUser = require('./functions/getUser.js');
+// database
+const low = require('lowdb');
+const FileSync = require('lowdb/adapters/FileSync');
+const adapter = new FileSync('database/db.json');
+const db = low(adapter);
+
+db.defaults({ users: [] }).write();
+//
+db.getUser = require('./functions/getUser.js');
 const cmds = fs
   .readdirSync(`${__dirname}/cmds/`)
   .filter((name) => /\.js$/i.test(name))
   .map((name) => require(`${__dirname}/cmds/${name}`));
 
-if (config.group_id > 0 || config.group_id != 0) vk.setOptions({ 'token': config.token, 'pollingGroupId': config.group_id });
-else vk.setToken(config.token);
+// Определение профиля/группы, токена
+if (config.group_id > 0 || config.group_id != 0) {
+  vk.setOptions({
+    'token': config.token,
+    'pollingGroupId': config.group_id
+  });
+}
+else {
+  vk.setToken(config.token);
+}
 
+// Определение имени бота
 let botN = '';
-if (!config.bot_name_string || config.bot_name_string == '') return console.log('Укажите имя бота в файле config.js'.red.bold);
-else botN = config.bot_name_string;
+if (!config.bot_name_string || config.bot_name_string == '') {
+  return console.log('Укажите имя бота в файле config.js'.red.bold);
+}
+else {
+  botN = config.bot_name_string;
+}
 
-vk.updates.startPolling();
 console.log(`Бот на ядре Fakeman Cat успешно запущен. Введите команду боту в ВК: ${botN}, тест`.green.bold);
+
+// Начало обработчика
+vk.updates.startPolling();
 vk.updates.on(['new_message', 'edit_message'], async(msg) => {
-  if (msg.senderId < 1) return;
+  if (msg.senderId < 1 || msg.isOutbox) return;
 
   if (!config.bot_name.test(msg.text) && msg.isChat) return;
   msg.setActivity();
+  await msg.loadMessagePayload();
   msg.text = msg.text.replace(config.bot_name, '');
-  msg.nick = (await vk.api.users.get({ user_ids: msg.senderId }))[0].first_name;
-  msg.owner = config.owner || 236908027;
-  
+  msg.user = await getUser(msg.senderId, { db, msg, vk });
+  msg.fwds = msg.forwards || null;
+
+  if (msg.user.ban.isBanned) {
+    return msg.send(`&#128213; | Вы забанены по причине: "${msg.user.ban.reason}"`);
+  }
+
   let cmd = cmds.find(cmd => cmd.regexp ? cmd.regexp.test(msg.text) : (new RegExp(`\\s*(${cmd.tag.join('|')})`, "i")).test(msg.text));
   if (!cmd) return msg.send('&#128213; | Команда не найдена');
   console.log(`${msg.senderId} => ${msg.text}`.green.bold);
@@ -35,14 +66,11 @@ vk.updates.on(['new_message', 'edit_message'], async(msg) => {
   msg.error = (text = "", params = {}) => {
     return msg.send('&#128213; | ' + text, params);
   };
-  if (cmd.admin && (!config.admins.includes(msg.senderId) && config.owner != msg.senderId)) {
-    return msg.error('Команда только для админов и выше!');
-  }
-  if (cmd.vip && (!config.vips.includes(msg.senderId) && !config.admins.includes(msg.senderId) && config.owner != msg.senderId)) {
-    return msg.error('Команда только для випов и выше!');
+  if (msg.user.rights < cmd.rights) {
+    return msg.error(`Команда доступна только ${[,'Випам', 'Админам', 'Создателю'][cmd.rights]} ${cmd.rights > 0 && cmd.rights !== 3 ? 'или выше' : ''}`);
   }
   try {
-    await cmd.func(msg, { botN, cmds, vk, VK, cmd });
+    await cmd.func(msg, { botN, cmds, vk, VK, cmd, db });
   }
   catch (e) {
     console.log(`Ошибка:\n${e}`.red.bold);
