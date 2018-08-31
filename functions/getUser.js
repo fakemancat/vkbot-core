@@ -1,4 +1,4 @@
-const { vk, db } = require('../index.js');
+const { vk, db } = require('../start.js');
 
 module.exports = async(ID) => {
     let user = db.get('users').find({ id: ID }).value();
