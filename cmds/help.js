@@ -2,7 +2,7 @@ module.exports = {
   regexp: /^(помощь|команды|х[еэ]лп)$/i,
   func: async(msg, { botN, cmds }) => {
     let result = [
-      `&#128215; | Команды бота ${botN}.`,
+      `Команды бота ${botN}.`,
       ``,
       `&#128313; Команды для Пользователей &#128313;`,
       cmds
@@ -26,7 +26,7 @@ module.exports = {
       ``,
       `&#128203; | Бот основан на ядре от [id236908027|Fakeman Cat]`
     ].join('\n');
-    msg.send(result);
+    msg.ok(result);
   },
   rights: 0,
   help: 'помощь',
