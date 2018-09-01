@@ -57,13 +57,13 @@ else {
   botN = config.bot_name_string;
 }
 
-// Консолим умпешный запуск
+// Консолим успешный запуск
 console.log(`Бот на ядре Fakeman Cat успешно запущен. Введите команду боту в ВК: ${botN}, тест`.green.bold);
 
 // Запускаем Полинг (Polling)
 vk.updates.startPolling();
 
-// Запускаем обработчик новый и изменённых сообщений
+// Запускаем обработчик новых и изменённых сообщений
 vk.updates.on(['new_message', 'edit_message'], async(msg) => {
   // Если сообщение от группы или исходящее, то возвращаем
   if (msg.senderId < 1 || msg.isOutbox) {
@@ -81,13 +81,15 @@ vk.updates.on(['new_message', 'edit_message'], async(msg) => {
   msg.setActivity();
 
   // Загружаем весь paylaod. Нужно от возникновения ошибок
-  await msg.loadMessagePayload();
-
+  if (config.group_id == 0) {
+    await msg.loadMessagePayload();
+  }
+  
   // Объявление важных переменных:
-  msg.text = msg.text.replace(config.bot_name, ''); // Текст сообщения равен тексте без имени бота: Кот, привет => привет
+  msg.text = msg.text.replace(config.bot_name, ''); // Текст сообщения равен тексту без имени бота: Кот, привет => привет
   msg.user = await db.getUser(msg.senderId); // Переменная содержащая в себе информацию о пользователе из базы
-  msg.fwds = msg.forwards || null; // Просто упрощение..
-
+  msg.fwds = msg.forwards || []; // Просто упрощение..
+  
   // Определяем команду по regexp или tag. Если команды нет, то пишем об этом  
   let cmd = cmds.find(cmd => cmd.regexp ? cmd.regexp.test(msg.text) : (new RegExp(`^\\s*(${cmd.tag.join('|')})`, "i")).test(msg.text));
   if (!cmd) return msg.send('&#128213; | Команда не найдена');
