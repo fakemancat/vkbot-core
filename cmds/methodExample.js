@@ -20,7 +20,7 @@ module.exports = {
         const id = user[0].id;
         
         // Отправляем сообщение с нашими готовыми переменными
-        msg.send([
+        msg.answer([
             `Имя: ${name}`,
             `Фамилия: ${lastName}`,
             `Статус: ${status ? status : 'Не указан'}`,
