@@ -3,7 +3,6 @@ module.exports = {
   func: async(msg, { botN, vk, cmds, db }) => {
     let code = msg.text.split(' ').slice(1).join(' ');
     let name = msg.text.split(' ')[0];
-    msg.send(name);
 
     try {
       let evaled, type;
@@ -20,7 +19,7 @@ module.exports = {
         evaled = eval(`(async() => {${code}})()`);
         type = typeof evaled;
       }
-      msg.ok(`Выполнено\nТип: ${type}\nРезультат: ${evaled}`);
+      msg.answer(`Выполнено\nТип: ${type}\nРезультат: ${evaled}`);
     }
     catch (e) {
       return msg.error(e);
