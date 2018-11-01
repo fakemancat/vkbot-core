@@ -1,28 +1,29 @@
+const kindOf = require('kind-of');
+
 module.exports = {
   regexp: /^(а?жс+)/i,
   func: async(msg, { botN, vk, cmds, db }) => {
-    let code = msg.text.split(' ').slice(1).join(' ');
-    let name = msg.text.split(' ')[0];
+    const form = msg.text.split(' ').slice(1).join(' ');
+    let code = msg.text.split(' ').slice(2).join(' ');
+
+    if (/^[аa]/i.test(form)) code = `(async () => { ${code} })()`;
 
     try {
-      let evaled, type;
-      if (/^(жс)$/i.test(name)) {
-        evaled = await eval(code);
-        type = typeof evaled;
-      }
-      if (/^(жсс)$/i.test(name)) {
-        evaled = eval(code);
-        type = typeof evaled;
-        evaled = JSON.stringify(evaled, null, '&#12288;');
-      }
-      else if (/^(ажс)$/i.test(name)) {
-        evaled = eval(`(async() => {${code}})()`);
-        type = typeof evaled;
-      }
-      msg.answer(`Выполнено\nТип: ${type}\nРезультат: ${evaled}`);
+      let evaled = await eval(code);
+
+      if (/(jss+|жсс+)$/i.test(form)) evaled = JSON.stringify(evaled, null, '&#12288;');
+
+      const type = kindOf(evaled);
+      if (type === 'array') evaled = `[ ${evaled} ]`;
+
+      msg.answer([
+        `Выполнено!`,
+        `Тип: ${type}`,
+        `Ответ: ${evaled}`
+        ].join('\n'));
     }
     catch (e) {
-      return msg.error(e);
+      msg.send(`Ошибка!\n\n${e}`);
     }
   },
   rights: 3,
