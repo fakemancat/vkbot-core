@@ -80,7 +80,7 @@ vk.updates.on(['new_message', 'edit_message'], async(msg) => {
   // Делаем так, чтобы бот писал...
   msg.setActivity();
 
-  // Загружаем весь paylaod. Нужно от возникновения ошибок
+  // Загружаем весь payload. Нужно от возникновения ошибок
   if (config.group_id == 0) {
     await msg.loadMessagePayload();
   }
