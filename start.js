@@ -45,7 +45,9 @@ if (config.group_id > 0 || config.group_id != 0) {
   });
 }
 else {
-  vk.setToken(config.token);
+  vk.setOptions({
+    'token': config.token
+  });
 }
 
 // Определяем имя бота
